@@ -16,19 +16,20 @@ gold=(255,215,0)
 
 snake_speed = 15
 
+
 snake_tex = pygame.image.load("snake_head.png")
 body_tex = pygame.image.load("snake_body.png")
 apple_red_tex = pygame.image.load("apple_red.png")
 
+
+
 style_font = pygame.font.SysFont("serif", 25)
-score_font = pygame.font.SysFont("cmmi10", 35)
 
 def print_score(score):
-    disp.blit(pygame.font.SysFont("cmmi10", 35).render('Ваш счёт: '+ str(score),True,gold),[50,10])
-
+    disp.blit(pygame.font.SysFont("cmmi10", 35).render('Ваш счёт: '+ str(score),True,gold),[10,10])
 def text(message, color):
     mesg = style_font.render(message, True, color)
-    disp.blit(mesg, [100, 50])
+    disp.blit(mesg, [50, 100])
 
 def snake_draw(snake,snake_tex,body_tex):
     if len(snake)>1:
@@ -51,7 +52,6 @@ def gameLoop():
     
     snake = []
 
-
     score= 0
 
 
@@ -60,12 +60,23 @@ def gameLoop():
 
 
     game_over=False
-
+    game_lose=False
 
     while game_over==False:
         
         disp.blit(pygame.image.load("fon.png"), ( 0,0 ) )
         
+        while game_lose == True:
+                disp.blit(pygame.image.load("fon_death.png"),(0,0))
+                text("Ты проиграл! Ты набрал очков: "+str(score)+ ". Нажми r-чтобы попробовать снова, q-чтобы выйти:", red)
+                pygame.display.update()
+                for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_q:
+                            game_over = True
+                            game_lose = False
+                        if event.key == pygame.K_r:
+                            gameLoop()
     
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
@@ -105,10 +116,13 @@ def gameLoop():
         if len(snake) > snake_length:
             del snake[0]
  
+        for x in snake[:-1]:
+            if x == snake_head:
+                game_lose = True
  
         snake_draw(snake,snake_tex,body_tex)
         print_score(score)
-        disp.blit(apple_red_tex,[apple_x,apple_y])
+        
 
         if ((0<=(snake_x -apple_x)<35) or (0<=(apple_x -snake_x)<35)) and ((0<=(snake_y - apple_y)<35) or (0<=(apple_y -snake_y)<35)):
             apple_x = int(round(random.randrange(0, disp_width - 35-35) / 10.0) * 10.0)
