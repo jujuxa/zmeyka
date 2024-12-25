@@ -111,7 +111,7 @@ def gameLoop():
             disp.blit(apple_gold_tex,[apple_x,apple_y])
         elif 0<apple_choose<=20:
             disp.blit(apple_not_tex,[apple_x,apple_y])
-        elif 40<apple_choose<=55:
+        elif 50<apple_choose<=55:
             disp.blit(apple_black_tex,[apple_x,apple_y])
         else:
             disp.blit(apple_red_tex,[apple_x,apple_y])
@@ -143,7 +143,7 @@ def gameLoop():
                 if snake_length >1:
                     snake_length -= 1
                     del snake[0]
-                score+= 5
+                score+= 3
             elif 0<apple_choose<=20:
                 if snake_length>1:
                     if snake_y_t!=0:
@@ -196,7 +196,7 @@ def gameLoop():
                 apple_choose = random.randint(1,100)
                 snake_length += 10
                 score +=0    
-            elif 40<apple_choose<=55:
+            elif 50<apple_choose<=55:
                 apple_x = int(round(random.randrange(0, disp_width - 70) / 10.0) * 10.0)
                 apple_y = int(round(random.randrange(0, disp_height - 70) / 10.0) * 10.0)
                 apple_choose = random.randint(1,100)
